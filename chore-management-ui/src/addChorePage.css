@@ -1,0 +1,51 @@
+.form  {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.field {
+    margin: 0.5em 0;
+}
+
+.field .item {
+    margin-top: 0.5em;
+}
+
+.image-container {
+    display: flex;
+    flex-flow: column;
+    width: 500px;
+    height: 500px;
+    max-height: 500px;
+    max-width: 500px;
+}
+
+.image-container img {
+    width: 250px;
+    height: 250px;
+}
+
+.image-container button {
+    margin: 0;
+}
+
+.ui.dropdown .menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    min-width: 100%;
+    padding: 8px 0;
+    margin: 0;
+    /*background-color: white;*/
+    border: 1px solid #d4d4d5;
+    border-top: none;
+    z-index: 1;
+}
+
+.ui.dropdown.visible .menu {
+    display: block;
+    position: relative;
+}

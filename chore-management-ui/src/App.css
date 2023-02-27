@@ -1,0 +1,45 @@
+body {
+  background-color: rgba(0,0,0,0.9);
+  color: yellow;
+  font-family: sans-serif;
+  text-align: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.landingpage-container a {
+    color: black;
+}
+
+a {
+  color: yellow;
+  text-decoration: none;
+}
+
+button {
+  background-color: yellow;
+  border: none;
+  border-radius: 10px;
+  color: black;
+  font-size: 2em;
+  /*margin-top: calc(50vh - 1em);*/
+  outline: none;
+  padding: 1em 2em;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: black;
+  color: yellow;
+}
+
+.container {
+  display: flex;
+  flex-flow: column;
+  width: 80%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
