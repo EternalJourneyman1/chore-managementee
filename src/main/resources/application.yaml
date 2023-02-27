@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      database: demo
+      uri: mongodb://localhost:27017/demo
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
