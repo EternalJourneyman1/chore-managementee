@@ -1,13 +1,67 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
-# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
-# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
-- test
-sast:
+  - build
+  - test
+  - security
+  - deploy
+
+variables:
+  DOCKER_REGISTRY: <your-docker-registry>
+  IMAGE_NAME: <your-image-name>
+  KUBE_NAMESPACE: <your-kubernetes-namespace>
+  KUBE_CLUSTER_NAME: <your-kubernetes-cluster-name>
+  KUBE_CONFIG_DATA: <your-base64-encoded-kube-config-data>
+
+build-backend:
+  stage: build
+  image: gradle:7.3.3-jdk11
+  script:
+    - cd backend
+    - gradle clean build
+
+build-frontend:
+  stage: build
+  image: node:14
+  script:
+    - cd frontend
+    - yarn install
+    - yarn build
+
+test-backend:
   stage: test
+  image: gradle:7.3.3-jdk11
+  script:
+    - cd backend
+    - gradle test
+
+test-frontend:
+  stage: test
+  image: node:14
+  script:
+    - cd frontend
+    - yarn install
+    - yarn test
+
+test-acceptance:
+  stage: test
+  image: node:14
+  script:
+    - cd acceptance-tests
+    - yarn install
+    - yarn test
+
+sast:
+  stage: security
 include:
-- template: Security/SAST.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+
+
+deploy-kubernetes:
+  stage: deploy
+  image: docker:20
+  script:
+    - echo $KUBE_CONFIG_DATA | base64 -d > kubeconfig.yaml
+    - kubectl config set-cluster $KUBE_CLUSTER_NAME --kubeconfig=kubeconfig.yaml --server=<your-kubernetes-server>
+    - kubectl config set-context $KUBE_NAMESPACE --kubeconfig=kubeconfig.yaml --cluster=$KUBE_CLUSTER_NAME --user=<your-kubernetes-user>
+    - kubectl config use-context $KUBE_NAMESPACE --kubeconfig=kubeconfig.yaml
+    - kubectl apply -f kubernetes/deployment.yaml -n $KUBE_NAMESPACE
+    - kubectl apply -f kubernetes/service.yaml -n $KUBE_NAMESPACE
