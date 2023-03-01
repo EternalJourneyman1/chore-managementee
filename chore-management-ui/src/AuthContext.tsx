@@ -11,10 +11,9 @@ export const AuthContext = createContext<{ user: User | null; setUser: React.Dis
 
 export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
-    const SESSION = Cookies.get("SESSION") || null
 
     useEffect(() => {
-        if(!SESSION) return
+        if(!Cookies.get("SESSION")) return
         fetch('/api/user')
             .then((res) => res.json())
             .then((data) => setUser(data))
