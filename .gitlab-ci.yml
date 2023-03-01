@@ -24,7 +24,7 @@ build-backend:
 
 build-frontend:
   stage: build
-  image: node:14
+  image: node:16
   script:
     - cd chore-management-ui
     - yarn install
@@ -43,7 +43,7 @@ test-backend:
 
 test-frontend:
   stage: test
-  image: node:14
+  image: node:16
   script:
     - cd chore-management-ui
     - yarn install
@@ -55,7 +55,16 @@ include:
   - template: Security/SAST.gitlab-ci.yml
 
 
-#deploy-kubernetes:
+build-image:
+  stage: deploy
+  image: docker:stable
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:latest
+  #deploy-kubernetes:
 #  stage: deploy
 #  image: docker:20
 #  script:
