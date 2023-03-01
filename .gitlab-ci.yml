@@ -5,8 +5,8 @@ stages:
   - deploy
 
 variables:
-  DOCKER_REGISTRY: <your-docker-registry>
-  IMAGE_NAME: <your-image-name>
+  DOCKER_REGISTRY: registry.gitlab.com/family_chore_tracker/choremanagement
+  IMAGE_NAME: chore-management-tracker
   KUBE_NAMESPACE: <your-kubernetes-namespace>
   KUBE_CLUSTER_NAME: <your-kubernetes-cluster-name>
   KUBE_CONFIG_DATA: <your-base64-encoded-kube-config-data>
@@ -15,14 +15,13 @@ build-backend:
   stage: build
   image: gradle:7.3.3-jdk11
   script:
-    - cd backend
     - gradle clean build
 
 build-frontend:
   stage: build
   image: node:14
   script:
-    - cd frontend
+    - cd chore-management-ui
     - yarn install
     - yarn build
 
@@ -38,14 +37,6 @@ test-frontend:
   image: node:14
   script:
     - cd frontend
-    - yarn install
-    - yarn test
-
-test-acceptance:
-  stage: test
-  image: node:14
-  script:
-    - cd acceptance-tests
     - yarn install
     - yarn test
 

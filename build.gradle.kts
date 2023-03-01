@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "dev.robinsond.chore-management"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -40,9 +40,10 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-tasks.named("bootRun") {
+tasks.named("processResources") {
     dependsOn("copyFrontend")
 }
+
 tasks {
     register<Exec>("installFrontend") {
         inputs.file(file("chore-management-ui/yarn.lock"))
