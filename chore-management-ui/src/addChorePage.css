@@ -1,25 +1,65 @@
+.add-chore-container {
+    display: flex;
+    height: 90vh;
+}
+
+/*.add-chore-image-container {*/
+/*    display: flex;*/
+/*    flex-flow: column;*/
+/*    align-items: center;*/
+/*}*/
 .form  {
     display: flex;
+    height: inherit;
     flex-flow: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
-.field {
-    margin: 0.5em 0;
+#root > div > div > form > div.field.gap > div.ui.active.visible.fluid.selection.dropdown {
+    color: inherit;
+    background-color: inherit;
+}
+.add-chore-container .text {
+    color: yellow !important;
+    background-color: black;
+}
+.add-chore-image-container > input[type=file] {
+    background-color: inherit !important;
+    color: inherit !important;
 }
 
-.field .item {
-    margin-top: 0.5em;
+.form .label {
+    background-color: inherit;
+    color: inherit;
 }
 
+.add-chore-container {
+    display: flex;
+    flex-flow: column;
+}
+
+.add-chore-image-container button {
+    width: 200px;
+}
 .image-container {
     display: flex;
     flex-flow: column;
+    align-items: center;
+    scroll-behavior: auto;
     width: 500px;
     height: 500px;
     max-height: 500px;
     max-width: 500px;
+}
+
+.image-container div {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+.image-container div button {
+
 }
 
 .image-container img {

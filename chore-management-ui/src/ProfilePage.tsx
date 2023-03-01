@@ -1,15 +1,16 @@
 import React from 'react';
-import {Button, Header, Segment} from 'semantic-ui-react';
+import {Button, Header, Image, Segment} from 'semantic-ui-react';
 import {useAuth} from "./AuthContext";
+import './profilePage.css'
 
-export const ProfilePage = ({ name, imageUrl, onEditProfile }: any) => {
+export const ProfilePage = ({onEditProfile}: any) => {
     const {user} = useAuth()
 
     return (
-        <Segment>
-            {/*<Image src={'logo.svg'} size="medium" floated="right" />*/}
+        <Segment className={'profile-container'}>
+            <Image className={'profile-pic'} src={'./profile.jpg'} size="small" floated="right"/>
             <Header as="h1">Hello {user!.username || "Guest"}</Header>
-            <Button color="yellow" onClick={onEditProfile}>Edit Profile</Button>
+            <Button color={'grey'} onClick={onEditProfile} disabled> Edit Profile</Button>
         </Segment>
     );
 }

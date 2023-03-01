@@ -19,13 +19,17 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
             .then((data) => setUser(data))
             .catch((error) => console.error(error));
     }, []);
-
+/*
     if (!user) {
         return <div>Loading...</div>;
+    }*/
+    const newUser = {
+        id: "2",
+        username: "Test User",
+        role: "USER"
     }
-
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user: newUser, setUser }}>
             {children}
         </AuthContext.Provider>
     );

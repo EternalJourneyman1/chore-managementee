@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './addChorePage.css'
 
-import {Button, Dropdown, Form, Input, Label} from 'semantic-ui-react';
+import {Button, Container, Dropdown, Form, Icon, Input, Label} from 'semantic-ui-react';
 
 const LocationOptions = [
     {key: 'Living Room', text: 'Living Room', value: 'Living Room'},
@@ -32,6 +32,7 @@ export const AddChorePage = () => {
     };
 
     const handleLocationChange = (e: any) => {
+        console.log(e.target.textContent)
         setLocation(e.target.textContent);
     };
 
@@ -74,34 +75,46 @@ export const AddChorePage = () => {
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Field>
-                <Label>Name</Label>
-                <Input placeholder='Name' value={name} onChange={handleNameChange}/>
-            </Form.Field>
-            <Form.Field>
-                <Label>Location</Label>
-                <Dropdown
-                    placeholder='Click on Location'
-                    fluid
-                    selection
-                    options={LocationOptions}
-                    value={location}
-                    onChange={handleLocationChange}
-                    onClick={handleLocationChange}
-                />
-            </Form.Field>
-            <Form.Field>
-                <Label>Images</Label>
-                <input type='file' multiple onChange={handleImageChange}/>
-                {images.map((image, index) => (
-                    <div className='image-container' key={index}>
-                        <img src={URL.createObjectURL(image)} alt={image.name}/>
-                        <Button icon='trash' onClick={() => handleImageRemove(index)}/>
-                    </div>
-                ))}
-            </Form.Field>
-            <Button type='submit'>Submit</Button>
-        </Form>
+        <Container className={'add-chore-container'}>
+            <Form onSubmit={handleSubmit}>
+                <Form.Field className={'gap'}>
+                    <Label>Location</Label>
+                    <Dropdown
+                        placeholder='Click on Location'
+                        fluid
+                        selection
+                        options={LocationOptions}
+                        value={location}
+                        onChange={handleLocationChange}
+                        onClick={handleLocationChange}
+                    />
+                    {location === 'Other' &&
+                    (<>
+                            <Label>Name</Label>
+                            <Input placeholder='Name' value={name} onChange={handleNameChange}/>
+                        </>
+                    )}
+                </Form.Field>
+                <Form.Field>
+
+                </Form.Field>
+                <Form.Field className={'add-chore-image-container'}>
+                    <Label>Images</Label>
+                    <input type='file' multiple onChange={handleImageChange}/>
+                    <Container className={'image-container'}>
+                    {images.map((image, index) => (
+                        <div key={index}>
+                            <img src={URL.createObjectURL(image)} alt={image.name}/>
+
+                            <Button icon onClick={() => handleImageRemove(index)}>
+                                <Icon name='trash' />
+                            </Button>
+                        </div>
+                    ))}
+                    </Container>
+                </Form.Field>
+                <Button type='submit'>Submit</Button>
+            </Form>
+        </Container>
     );
 };

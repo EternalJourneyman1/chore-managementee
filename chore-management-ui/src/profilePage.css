@@ -1,0 +1,15 @@
+.profile-pic {
+    width: 140px;
+    height: 140px;
+    border-radius: 100px;
+}
+
+.profile-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 90vh;
+    padding: 0.925em;
+    padding: 0.925em;
+}

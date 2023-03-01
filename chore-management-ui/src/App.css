@@ -12,26 +12,30 @@ body {
 }
 
 a {
-  color: yellow;
-  text-decoration: none;
+  color: yellow !important;
+  text-decoration: none !important;
 }
 
 button {
-  background-color: yellow;
+  background-color: yellow !important;
   border: none;
   border-radius: 10px;
-  color: black;
+  color: black !important;
   font-size: 2em;
-  /*margin-top: calc(50vh - 1em);*/
   outline: none;
   padding: 1em 2em;
   transition: all 0.2s;
-  cursor: pointer;
 }
 
 button:hover {
-  background-color: black;
-  color: yellow;
+  background-color: black !important;
+  color: yellow !important;
+}
+
+button:disabled {
+  background-color: gray;
+  color: rgba(255, 255, 0, 0.5);
+  cursor: not-allowed;
 }
 
 .container {
