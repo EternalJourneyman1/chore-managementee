@@ -13,7 +13,7 @@ variables:
 
 build-backend:
   stage: build
-  image: openjdk:11-jdk-buster
+  image: node:14-jdk
   script:
     - gradle clean build
 
@@ -27,7 +27,7 @@ build-frontend:
 
 test-backend:
   stage: test
-  image: gradle:7.3.3-jdk11
+  image: node:14-jdk
   script:
     - cd backend
     - gradle test
@@ -46,13 +46,13 @@ include:
   - template: Security/SAST.gitlab-ci.yml
 
 
-deploy-kubernetes:
-  stage: deploy
-  image: docker:20
-  script:
-    - echo $KUBE_CONFIG_DATA | base64 -d > kubeconfig.yaml
-    - kubectl config set-cluster $KUBE_CLUSTER_NAME --kubeconfig=kubeconfig.yaml --server=<your-kubernetes-server>
-    - kubectl config set-context $KUBE_NAMESPACE --kubeconfig=kubeconfig.yaml --cluster=$KUBE_CLUSTER_NAME --user=<your-kubernetes-user>
-    - kubectl config use-context $KUBE_NAMESPACE --kubeconfig=kubeconfig.yaml
-    - kubectl apply -f kubernetes/deployment.yaml -n $KUBE_NAMESPACE
-    - kubectl apply -f kubernetes/service.yaml -n $KUBE_NAMESPACE
+#deploy-kubernetes:
+#  stage: deploy
+#  image: docker:20
+#  script:
+#    - echo $KUBE_CONFIG_DATA | base64 -d > kubeconfig.yaml
+#    - kubectl config set-cluster $KUBE_CLUSTER_NAME --kubeconfig=kubeconfig.yaml --server=<your-kubernetes-server>
+#    - kubectl config set-context $KUBE_NAMESPACE --kubeconfig=kubeconfig.yaml --cluster=$KUBE_CLUSTER_NAME --user=<your-kubernetes-user>
+#    - kubectl config use-context $KUBE_NAMESPACE --kubeconfig=kubeconfig.yaml
+#    - kubectl apply -f kubernetes/deployment.yaml -n $KUBE_NAMESPACE
+#    - kubectl apply -f kubernetes/service.yaml -n $KUBE_NAMESPACE
